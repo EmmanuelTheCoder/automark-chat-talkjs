@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>other user</title>
+</head>
+<body>
+
+</body>
+
+<script>
+
+(function(t,a,l,k,j,s){
+    s=a.createElement('script');s.async=1;s.src="https://cdn.talkjs.com/talk.js";a.head.appendChild(s)
+    ;k=t.Promise;t.Talk={v:3,ready:{then:function(f){if(k)return new k(function(r,e){l.push([f,r,e])});l
+    .push([f])},catch:function(){return k&&new k()},c:l}};})(window,document,[]);
+
+
+Talk.ready.then(function() {
+
+    const customer = new Talk.User({
+      id: '654321',
+      name: 'Smith',
+      email: 'smith@example.com',
+      photoUrl: 'https://talkjs.com/images/avatar-5.jpg',
+      welcomeMessage: 'Hey, I want to make an Inquiry...',
+      role: 'customer'
+    });
+    
+    window.talkSession = new Talk.Session({
+      appId: 'txi2DjQS',
+      me: customer,
+    });
+   
+    const support = new Talk.User({
+        id: '123456',
+        name: 'Lynda from Support',
+        email: 'lynda@test.app',
+        photoUrl: 'https://talkjs.com/images/avatar-1.jpg',
+       welcomeMessage: 'Hi! I am Lynda from support, how may I be of help!',
+        role: 'support'
+    });
+
+  
+    const conversation = talkSession.getOrCreateConversation(
+        Talk.oneOnOneId(support, customer)
+        );
+    
+    conversation.setParticipant(support);
+    conversation.setParticipant(customer);
+  
+    const inbox = talkSession.createInbox({ selected: conversation });
+    inbox.mount(document.getElementById('talkjs-container'));
+    
+})
+</script>
+
+<div id="talkjs-container" style="width: 90%; margin: 30px; height: 500px">
+    <i>Loading chat...</i>
+  </div>
+</html>
